@@ -1,0 +1,82 @@
+if isdef("toolbox_optimization") then
+    error("Toolbox is already loaded. Please unload to proceed!");
+end
+
+verboseMode = ilib_verbose();
+ilib_verbose(0);
+
+TOOLBOX_NAME = "Optimization_Toolbox";
+TOOLBOX_TITLE = "Optimization Toolbox";
+
+if (isdef("optimization_libs") <> %t) then
+    optimization_libs = [];
+end
+
+function [toolbox_optimization, optimization_libs] = startModule()
+
+    mprintf("Start " + TOOLBOX_NAME + "\n");
+
+    etc_tlbx  = get_absolute_file_path(TOOLBOX_NAME + ".start");
+    etc_tlbx  = getshortpathname(etc_tlbx);
+    root_tlbx = strncpy( etc_tlbx, length(etc_tlbx) - 5 );  // length("\etc\") = 5
+
+    // Load Macros
+    mprintf("\tLoad macros\n");
+    pathmacros = pathconvert( root_tlbx ) + "macros" + filesep();
+    toolbox_optimization = lib(pathmacros);
+
+    // Load Libraries
+    mprintf("\tLoad Libraries\n");
+    [a, opt] = getversion();
+    ARCH = opt(2);
+    if getos()=="Windows" then
+        // MSVS Shared DLL don't provide Native Support to Scilab.
+    else
+        lib_path = root_tlbx + filesep() + "thirdparty" + filesep() + "linux" + filesep() + "lib" + filesep() + ARCH + filesep();
+        optimization_libs($+1) = link(lib_path + "libCoinUtils.so");
+        optimization_libs($+1) = link(lib_path + "libOsi.so");
+        optimization_libs($+1) = link(lib_path + "libClp.so");
+        optimization_libs($+1) = link(lib_path + "libOsiClp.so");
+        optimization_libs($+1) = link(lib_path + "libClpSolver.so");
+        optimization_libs($+1) = link(lib_path + "libcoinmumps.so");
+        optimization_libs($+1) = link(lib_path + "libipopt.so");
+        optimization_libs($+1) = link(lib_path + "libminotaur.so");
+        optimization_libs($+1) = link(lib_path + "libmntrosilp.so");
+        optimization_libs($+1) = link(lib_path + "libmntripopt.so");
+        optimization_libs($+1) = link(lib_path + "libmntrengfac.so");
+        optimization_libs($+1) = link(lib_path + "libortools.so");
+        optimization_libs($+1) = link(lib_path + "libcvrptw_lib.so");
+        optimization_libs($+1) = link(lib_path + "libdimacs.so");
+        optimization_libs($+1) = link(lib_path + "libfap.so");
+        optimization_libs($+1) = link(lib_path + "libjniortools.so");
+    end
+
+    // Load Gateway
+    mprintf("\tLoad Gateway\n");
+    exec(pathconvert(root_tlbx + filesep() + "sci_gateway" + filesep() + "loader_gateway.sce", %f));
+
+    // Load and add help chapter
+    // =============================================================================
+    if or(getscilabmode() == ["NW";"STD"]) then
+        mprintf("\tLoad help\n");
+        path_addchapter = pathconvert(root_tlbx + filesep() + "jar");
+        if ( isdir(path_addchapter) <> [] ) then
+            add_help_chapter(TOOLBOX_NAME, path_addchapter, %F);
+        end
+    end
+
+    // Load demos
+    // =============================================================================
+    if or(getscilabmode() == ["NW";"STD"]) then
+        mprintf("\tLoad demos\n");
+        pathdemos = pathconvert(root_tlbx + filesep() + "demos" + filesep() + TOOLBOX_NAME + ".dem.gateway.sce", %F, %T);
+        add_demo(TOOLBOX_NAME, pathdemos);
+    end
+
+endfunction
+
+toolbox_optimization = startModule();
+
+ilib_verbose(verboseMode);
+
+clear startModule TOOLBOX_NAME TOOLBOX_TITLE verboseMode;

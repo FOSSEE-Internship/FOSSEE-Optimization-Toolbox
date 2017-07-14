@@ -1,0 +1,52 @@
+if ( isdef("toolbox_optimization") <> %t ) then
+    warning("Toolbox is not loaded. Please load to proceed!");
+end
+
+verboseMode = ilib_verbose();
+ilib_verbose(0);
+
+function quitModule()
+
+    TOOLBOX_NAME  = "Optimization_Toolbox";
+    TOOLBOX_TITLE = "Optimization Toolbox";
+
+    mprintf("Stop " + TOOLBOX_NAME + "\n");
+
+    etc_tlbx  = get_absolute_file_path(TOOLBOX_NAME + ".quit");
+    etc_tlbx  = getshortpathname(etc_tlbx);
+    root_tlbx = strncpy( etc_tlbx, length(etc_tlbx) - 5 );  // length("\etc\") = 5
+
+    // Unlink Libraries
+    [bOK, ilib] = c_link("lib" + TOOLBOX_NAME + "_cpp");
+    if bOK then
+        ulink(ilib);
+    end
+    [bOK, ilib] = c_link("lib" + TOOLBOX_NAME + "_c");
+    if bOK then
+        ulink(ilib);
+    end
+    [bOK, ilib] = c_link("lib" + TOOLBOX_NAME + "_java");
+    if bOK then
+        ulink(ilib);
+    end
+    [bOK, ilib] = c_link("lib" + TOOLBOX_NAME + "_fortran");
+    if bOK then
+        ulink(ilib);
+    end
+    if isdef("optimization_libs") then
+        ulink(optimization_libs);
+    end
+
+    // Remove Preferences GUI
+    // =============================================================================
+    if getscilabmode() == "STD" then
+        removeModulePreferences(root_tlbx);
+    end
+
+endfunction
+
+quitModule();
+
+ilib_verbose(verboseMode);
+
+clear quitModule toolbox_optimization optimization_libs TOOLBOX_NAME TOOLBOX_TITLE verboseMode;
