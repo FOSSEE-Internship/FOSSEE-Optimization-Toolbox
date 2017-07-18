@@ -63,7 +63,7 @@ labels=['alpha' 'beta'  'gamma' 'theta' 'sigma'];
 halt()   // Press return to continue
  
 [mincost,path,status]=tsp(adj,start_node,labels);
-Press ENTER to continue
+//Press ENTER to continue
 halt()   // Press return to continue
  
 //OUTPUT :

@@ -120,7 +120,7 @@ function [mincost,path,status] = tsp(varargin)
 	//labels=['alpha' 'beta'  'gamma' 'theta' 'sigma'];
 	// 
 	//[mincost,path,status]=tsp(adj,start_node,labels);
-	//Press ENTER to continue
+	////Press ENTER to continue
 	//
 	////OUTPUT : 
 	////'ROUTING_SUCCESS' ; An optimal solution was found
