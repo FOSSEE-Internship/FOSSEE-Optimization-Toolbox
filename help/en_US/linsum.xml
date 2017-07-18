@@ -57,6 +57,19 @@ Find the minimum cost and assignment for a given set of jobs and workers
 The routine uses Google ORtools for solving the quadratic problem, ORtools is a library written in C++.
    </para>
    <para>
+<latex>
+\text{}\\
+\begin{align}
+&amp; \text{minimize} &amp;&amp; \texttt{kCost}\text{ . }\texttt{assignment}\\
+&amp; \text{subject to} &amp;&amp; \sum_{i=0}^{\texttt{kNumLeftNodes}} \texttt{assignment}_{ij} = 1 \\
+&amp;&amp;&amp; \sum_{j=0}^{\texttt{kNumRightNodes}} \texttt{assignment}_{ij} = 1
+\end{align}\\
+\text{}\\
+\text{}\\
+\text{}\\
+</latex>
+   </para>
+   <para>
 </para>
 </refsection>
 

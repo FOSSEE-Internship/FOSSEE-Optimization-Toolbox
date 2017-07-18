@@ -63,6 +63,21 @@ Find the minimum cost and flow for a given set of sources and targets with limit
 The routine uses Google ORtools for solving the quadratic problem, ORtools is a library written in C++.
    </para>
    <para>
+<latex>
+\text{}\\
+\begin{align}
+&amp; \text{minimize} &amp;&amp; \texttt{kCost}\text{ . }\texttt{flow}\\
+&amp; \text{subject to} &amp;&amp; \texttt{flow}_{ij} \leq \texttt{kSupply}_i \\
+&amp;&amp;&amp; \texttt{flow}_{ij} \geq \texttt{kDemand}_j \\
+&amp;&amp;&amp; \texttt{flow}_{ij} \leq \texttt{kCapacity}_{ij} \\
+&amp;&amp;&amp; \sum_{i=1}^{\texttt{kNumSources}} \texttt{kSupply}_i = \sum_{j=1}^{\texttt{kNumTargets}} \texttt{kDemand}_j
+\end{align}\\
+\text{}\\
+\text{}\\
+\text{}\\
+</latex>
+   </para>
+   <para>
 The status allows to know the status of the optimization which is given back by ORtools.
 <itemizedlist>
 <listitem>status=0 : Not Solved</listitem>

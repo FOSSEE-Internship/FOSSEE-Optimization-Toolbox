@@ -21,6 +21,20 @@ function [cost, flow, status] = min_cost_flow(varargin)
 	//   
 	//	The routine uses Google ORtools for solving the quadratic problem, ORtools is a library written in C++.
 	//
+	//	<latex>
+	//		\text{}\\
+	//		\begin{align}
+	//		& \text{minimize} && \texttt{kCost}\text{ . }\texttt{flow}\\
+	//		& \text{subject to} && \texttt{flow}_{ij} \leq \texttt{kSupply}_i \\
+	//		&&& \texttt{flow}_{ij} \geq \texttt{kDemand}_j \\
+	//		&&& \texttt{flow}_{ij} \leq \texttt{kCapacity}_{ij} \\
+	//		&&& \sum_{i=1}^{\texttt{kNumSources}} \texttt{kSupply}_i = \sum_{j=1}^{\texttt{kNumTargets}} \texttt{kDemand}_j
+	//		\end{align}\\
+	//		\text{}\\
+	//		\text{}\\
+	//		\text{}\\
+	//	</latex>
+	//
 	//	The status allows to know the status of the optimization which is given back by ORtools.
 	//	<itemizedlist>
 	//		<listitem>status=0 : Not Solved</listitem>

@@ -18,6 +18,18 @@ function [cost, assignment, status] = linsum(varargin)
 	//   
 	//   The routine uses Google ORtools for solving the quadratic problem, ORtools is a library written in C++.
 	//
+	//	<latex>
+	//		\text{}\\
+	//		\begin{align}
+	//		& \text{minimize} && \texttt{kCost}\text{ . }\texttt{assignment}\\
+	//		& \text{subject to} && \sum_{i=0}^{\texttt{kNumLeftNodes}} \texttt{assignment}_{ij} = 1 \\
+	//		&&& \sum_{j=0}^{\texttt{kNumRightNodes}} \texttt{assignment}_{ij} = 1
+	//		\end{align}\\
+	//		\text{}\\
+	//		\text{}\\
+	//		\text{}\\
+	//	</latex>
+	//
 	//   Examples
 	//   //Ref :
 	//   //http://www.hungarianalgorithm.com/examplehungarianalgorithm.php
